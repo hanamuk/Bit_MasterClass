@@ -1,0 +1,3 @@
+﻿  RANDINGMACHINE.c
+C:\CHW_VS_CODE\ConsoleApplicationSTDIO\ConsoleApplicationSTDIO\RANDINGMACHINE.c(38,6): warning C4101: 'nChange' :참조되지 않은 지역 변수입니다.
+  ConsoleApplicationSTDIO.vcxproj -> C:\CHW_VS_CODE\ConsoleApplicationSTDIO\Debug\ConsoleApplicationSTDIO.exe
