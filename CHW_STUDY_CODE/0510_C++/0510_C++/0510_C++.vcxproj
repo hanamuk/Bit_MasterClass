@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="C++2_생성자_소멸자.cpp" />
+    <ClCompile Include="C++3_Member.cpp" />
     <ClCompile Include="C++object.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,6 +1,6 @@
 #include<iostream>
 
-#define ON_MAIN
+//#define ON_MAIN
 using namespace std;
 #ifdef ON_MAIN 
 
@@ -32,6 +32,14 @@ public:
 		cout << "CTest 생성자 int, int" << endl;
 		m_nA = a + b;
 	}
+
+	CTest(double a) = delete;	//double형이 오면 delete 즉 컴파일 에러를 내라는 코드.
+	/*
+	{
+		cout << "CTest 생성자 double" << endl;
+		m_nA = -1;
+	}
+	*/
 	~CTest()
 	{
 		cout << "CTest 소멸자" << endl;
@@ -51,6 +59,10 @@ int main(void)
 
 	CTest c(20,99);
 	cout << c.m_nA << endl;
+
+	CTest d(3.14);
+	cout << d.m_nA << endl;
+
 
 
 
