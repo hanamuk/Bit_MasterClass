@@ -1,0 +1,17 @@
+Win32 시작.
+> windows 애플리케이션 데스크 탑으로 만들기.
+- 원도우는 모든 명령을 msg 메시지로 한다. (메세지는 #define으로 선언되어있다)
+  즉 윈도우즈는 메세지 기반.
+
+1. 윈도우즈에서는 wWinMain이 메인함수이다.
+MyRegisterClass(등록) > InitInstance(초기화): 문제가 나면 false리턴 >while문으로 들어감
+> GetMessage로 메시지를 msg에 받아서(정지 메시지를 받을때까지) 
+> 받은메시지를  DispatchMessage로 다른곳(WndProc)으로 보낸다 : DispatchMessage함수가 돌다가 콜백으로 WndProc으로 간다.
+
+* MyRegisterClass에서 wcex.lpfnWndProc  = WndProc; 는
+   프로시저(야수 선수 포수와 같은역할 )를 정해주는 코드 WndProc을 바꿀수 있는데
+   투수역할을 하는 메인은 바꾸지 못한다.
+
+2. WndProc에서 case로 정의되지 않은 메시지는 기본값(default)으로
+    DefWindowProc로 간다. (윈도우라면 당연히 이렇게 하리라는 행동.)
+
