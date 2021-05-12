@@ -1,9 +1,0 @@
-﻿  AddFuntion.c
-C:\CHW_VS_CODE\0430_String\0430_String\AddFuntion.c(72,19): warning C4113: 'void (__cdecl *)()'은(는) 'int (__cdecl *)(int,int)'과(와) 매개 변수 목록이 다릅니다.
-C:\CHW_VS_CODE\0430_String\0430_String\AddFuntion.c(72,19): warning C4133: '=': 'void (__cdecl *)()'과(와) 'int (__cdecl *)(int,int)' 사이의 형식이 호환되지 않습니다.
-C:\CHW_VS_CODE\0430_String\0430_String\AddFuntion.c(76,19): warning C4113: 'void (__cdecl *)()'은(는) 'void (__cdecl *)(void)'과(와) 매개 변수 목록이 다릅니다.
-C:\CHW_VS_CODE\0430_String\0430_String\AddFuntion.c(109,9): warning C4477: 'printf' : 서식 문자열 '%d'에 'int' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'int *'입니다.
-C:\CHW_VS_CODE\0430_String\0430_String\AddFuntion.c(109,9): warning C4477: 'printf' : 서식 문자열 '%d'에 'int' 형식의 인수가 필요하지만 variadic 인수 2의 형식이 'int *'입니다.
-C:\CHW_VS_CODE\0430_String\0430_String\AddFuntion.c(116,9): warning C4477: 'printf' : 서식 문자열 '%d'에 'int' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'int *'입니다.
-C:\CHW_VS_CODE\0430_String\0430_String\AddFuntion.c(116,9): warning C4477: 'printf' : 서식 문자열 '%d'에 'int' 형식의 인수가 필요하지만 variadic 인수 2의 형식이 'int *'입니다.
-  0430_String.vcxproj -> C:\CHW_VS_CODE\0430_String\Debug\0430_String.exe

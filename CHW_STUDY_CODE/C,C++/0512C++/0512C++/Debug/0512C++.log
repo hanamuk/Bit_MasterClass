@@ -1,7 +1,0 @@
-﻿  C++_template.cpp
-C:\CHW_BIT_CODE\0512C++\0512C++\C++_template.cpp(45,25): warning C4244: '인수': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-          with
-          [
-              T=int
-          ]
-  0512C++.vcxproj -> C:\CHW_BIT_CODE\0512C++\Debug\0512C++.exe
