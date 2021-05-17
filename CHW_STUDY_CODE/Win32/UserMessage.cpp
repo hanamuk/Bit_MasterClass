@@ -1,10 +1,8 @@
-// WindowsProject_0513.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+// GUI_resource.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
-#define ON_MAIN
-#ifdef ON_MAIN
 
 #include "framework.h"
-#include "WindowsProject_0513.h"
+#include "GUI_resource.h"
 
 #define MAX_LOADSTRING 100
 
@@ -30,9 +28,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // TODO: 여기에 코드를 입력합니다.
 
     // 전역 문자열을 초기화합니다.
-    LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_WINDOWSPROJECT0513, szWindowClass, MAX_LOADSTRING);
-
+    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDC_GUIRESOURCE, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -41,7 +38,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT0513));
+    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GUIRESOURCE));
 
     MSG msg;
 
@@ -72,16 +69,14 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbSize = sizeof(WNDCLASSEX);
 
     wcex.style = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc = WndProc;  //포수이름. 처음에만 바꿀수있다.
+    wcex.lpfnWndProc = WndProc;
     wcex.cbClsExtra = 0;
     wcex.cbWndExtra = 0;
     wcex.hInstance = hInstance;
-    wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WINDOWSPROJECT0513));
-    wcex.hCursor = LoadCursor(nullptr, IDC_HAND);
+    wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_GUIRESOURCE));
+    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-    //wcex.hbrBackground  = (HBRUSH)GetStockObject(GRAY_BRUSH);
-
-    wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_WINDOWSPROJECT0513);
+    wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_GUIRESOURCE);
     wcex.lpszClassName = szWindowClass;
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -102,7 +97,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
     hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-    HWND hWnd = CreateWindowW(szWindowClass, _T("KeyDown"), WS_OVERLAPPEDWINDOW,
+    HWND hWnd = CreateWindowW(szWindowClass, _T("SORI"), WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
     if (!hWnd)
@@ -126,94 +121,65 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+
+
+#define WM_SORI         WM_USER + 1
+#define WM_POWEROFF     WM_USER + 2
+#define WM_POWERON      WM_USER + 3
+
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    static TCHAR* mem;
-
-    static TCHAR str[256] = { 0 };
-    int len;
-
-    static int x = 200;
-    static int y = 200;
-
-    static int x2 = 200;
-    static int y2 = 200;
+    static HBRUSH hRed, hGreen, hBlue;
+    static HBRUSH NowBrush;
     switch (message)
     {
-    case WM_CHAR: //키보드에서 문자 키가 눌린 때 
+
+    case WM_SORI :
     {
-        if ((TCHAR)wParam == ' ')
+        HDC hdc = GetDC(hWnd);
+        MessageBeep(0);
+
+        SelectObject(hdc, GetStockObject(NULL_BRUSH));
+
+        for (int i = 0; i < 100; i+=5)
         {
-            str[0] = 0;
+            Ellipse(hdc, 200 - i, 200 - i / 2, 200 + i, 200 + i / 2);
+            Sleep(10);
         }
-        else
-        {
-            len = lstrlen(str);
-            str[len] = (TCHAR)wParam;
-            str[len + 1] = 0;
-        }
-        InvalidateRect(hWnd, NULL, TRUE); // WM_PAINT 발생시킴    
+        Sleep(100);
+
+        RECT rt;
+        SetRect(&rt, 100, 100, 300, 300);
+        FillRect(hdc, &rt, (HBRUSH)GetStockObject(WHITE_BRUSH));
+        ReleaseDC(hWnd, hdc);
     }
     break;
-
-    case WM_KEYDOWN:
-    {
-        //사방향 키에 대해서 0,0 -> x,y 좌표 조정 
-        switch (wParam)
-        {
-        case VK_LEFT:
-            x -= 8;
-            break;
-        case VK_RIGHT:
-            x += 8;
-            break;
-        case VK_UP:
-            y -= 8;
-            break;
-        case VK_DOWN:
-            y += 8;
-            break;
-        }
-        InvalidateRect(hWnd, NULL, FALSE); // WM_PAINT 발생시킴    
-    }
-    break;
-
-    case WM_LBUTTONDOWN:
-        //case WM_MOUSEMOVE:
-    {
-        x2 = LOWORD(lParam);
-        y2 = HIWORD(lParam);
-        //InvalidateRect(hWnd, NULL, FALSE); // WM_PAINT 발생시킴    
-        InvalidateRect(hWnd, NULL, TRUE); // WM_PAINT 발생시킴    
-    }
-    break;
-
     case WM_PAINT:
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
-        // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-        TextOut(hdc, x, y, _T("P"), 1);
-        TextOut(hdc, x2, y2, _T("안녕하세요 반가워요 잘있어요 다시만나요"), 21);
-        TextOut(hdc, 100, 100, str, lstrlen(str));
+
         EndPaint(hWnd, &ps);
     }
     break;
-
-    case WM_CREATE: // 윈도우가 생성됨
-        mem = (TCHAR*)malloc(101231);
-        break;
-
-    case WM_DESTROY: // 윈도우가 파괴됨
+    
+    case WM_LBUTTONDOWN :
     {
+        SendMessage(hWnd, WM_SORI, 0, 0);
+    
+    }
+    break;
+
+
+    case WM_DESTROY:
         PostQuitMessage(0);
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
     return 0;
-    }
 }
 
 
-#endif
+

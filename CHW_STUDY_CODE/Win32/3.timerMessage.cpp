@@ -1,7 +1,7 @@
 // WindowsProject_0513.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
-#define ON_MAIN
+//#define ON_MAIN
 #ifdef ON_MAIN
 
 // WindowsProject_0513.cpp : 애플리케이션에 대한 진입점을 정의합니다.
@@ -128,7 +128,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 //
 
-void CALLBACK MyTimerproc( HWND hWnd,UINT_PTR unnamedParam3,DWORD unnamedParam4) // 콜백으로 사용하려고 CALLBACK 키워드 사용
+;
+
+void CALLBACK MyTimerproc( HWND hWnd,UINT unnamedParam2,UINT_PTR unnamedParam3,DWORD unnamedParam4) // 콜백으로 사용하려고 CALLBACK 키워드 사용
 {
     HDC hdc = GetDC(hWnd);
     for (int i = 0; i < 1000; i++)
@@ -137,7 +139,20 @@ void CALLBACK MyTimerproc( HWND hWnd,UINT_PTR unnamedParam3,DWORD unnamedParam4)
     }
     ReleaseDC(hWnd, hdc);
 }
+/*
+//OS의 함수(먼저 있던 함수)
+void SetTimer(HWND hWnd, int nID, int nTime, void (pFunc*)(HWND, UINT, UINT_PTR, DWORD))
+{
+    //1. nTime시간 동안 기다린다.
+    Sleep(nTime);
 
+    //2. 시간이 다 되면
+    if (pFunc == NULL)
+        SendMessage(hWnd, WM_TIMER, nID, NULL);
+    else
+        pFunc(hWnd);
+}
+*/
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     static TCHAR sTime[128];
@@ -147,7 +162,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
         //SetTimer(hWnd, 1, 1000, NULL);//타이머를 만들어주세요, 1번알람으로 쓴다, 1초(1000)마다 뜬다.
        // SetTimer(hWnd, 2, 5000, NULL);
+      
+        //1. 내가 하지 않고, 누군가(SetTimer-OS)에게 부탁해서 MyTimerproc()가 콜되어짐(Callback)
         SetTimer(hWnd, 3, 100, MyTimerproc);//마지막인자가 NULL이면 WM_TIMER로가고 , 함수이름을 주면 함수로 연결된다. 즉 이건 MyTimerproc로 간다.
+
+        //2. 내가 MyTimerproc()를 콜했음
+        Sleep(1000000);
+        MyTimerproc(hWnd, 0, 0, 0);//내가 콜했음
 
     }
     break;

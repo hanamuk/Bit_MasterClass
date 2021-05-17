@@ -1,0 +1,38 @@
+1.
+
+MyRegisterClass()
+등록----------------------
+시스템에서 만든 리스트, 버튼, edit과  같은 윈도우는 그냥 쓸 수 있지만
+내가만든 윈도우(사용자 등록윈도우)는 등록을 해야한다 . 
+이걸 등록해주는 것이 MyRegisterClass()이다. 
+
+InitInstance()
+생성-----------------------
+에서는
+CreateWindow("클래스이름",윈도우 이름.....);을 불러주는 함수다.
+즉 윈도우를 생성해주는 함수.
+
+
+sz를 널로끝나는 문자열 변수에 사용.
+ 
+HWND, HBRUSH 같은건 32비트 정수값이다.
+- H가 붙으면 핸들값이다..
+- HDC는 handle Devie context : 그림 전문가.. 이라고 한다 그려주는것.
+  : GetDC(),  releaseDC()
+
+
+CreateWindow을 할때 메인 창은 뒤에서 4번 째 인자에 nullptr(부모가 없다)를 넣어주고
+차일드 윈도우를 할때는 WS_CHILD 를 넣어주
+
+윈도우의 3가지 종류
+ WS_CHILD,
+ WS_POPUP( WS_CAPTION|WS_SYSMENU(x누르면 지우기 등) 를 기본으로 주는게 좋다.)
+ WS_OVERLAPPEDWINDOW
+
+
+윈도우의 값을 개별적으로 가지고 있어야하는데 전역변수나 static으로 사용하지 못할때 (즉 자신만의
+속성값을 가지고 있어야할 때는 )
+bProp = (BOOL)GetProp(hWnd, TEXT("bEllipse"));
+SetProp(hWnd, TEXT("bEllipse"), (HANDLE)!bProp); 와 같은 것을 사용하여서 하면 된다.
+사용한 후 마지막에  RemoveProp(hWnd, TEXT("bEllipse")); 를 사용해 속성을 없앤다.
+

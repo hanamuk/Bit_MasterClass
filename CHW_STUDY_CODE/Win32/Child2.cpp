@@ -10,12 +10,16 @@
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
-
+HWND h;
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+
+LRESULT CALLBACK ChildProc(HWND, UINT, WPARAM, LPARAM);
+LPCTSTR lpszChildClass = TEXT("ChildWnd");
+
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
@@ -80,38 +84,46 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.lpszClassName = szWindowClass;
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
-    return RegisterClassExW(&wcex);
+    RegisterClassExW(&wcex);
+
+    //차일드 윈도우 등록
+    static HBRUSH hRed = CreateSolidBrush(RGB(255, 0, 0));
+
+    wcex.hbrBackground = hRed;
+    wcex.lpfnWndProc = ChildProc;
+    wcex.lpszClassName = lpszChildClass;
+    wcex.hCursor = LoadCursor(NULL, IDC_CROSS);
+
+    RegisterClassExW(&wcex);
+
+    return 0;
+
+
+  
+
 }
 
-//
 //   함수: InitInstance(HINSTANCE, int)
-//
-//   용도: 인스턴스 핸들을 저장하고 주 창을 만듭니다.
-//
-//   주석:
-//
-//        이 함수를 통해 인스턴스 핸들을 전역 변수에 저장하고
-//        주 프로그램 창을 만든 다음 표시합니다.
-//
+
+
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장
 
     HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   
+    ShowWindow(hWnd, nCmdShow);
+    UpdateWindow(hWnd);
 
     if (!hWnd)
     {
         return FALSE;
     }
 
-    ShowWindow(hWnd, nCmdShow);
-    UpdateWindow(hWnd);
-
     return TRUE;
 }
 
-//
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
 //  용도: 주 창의 메시지를 처리합니다.
@@ -119,106 +131,104 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_COMMAND  - 애플리케이션 메뉴를 처리합니다.
 //  WM_PAINT    - 주 창을 그립니다.
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
-//
-//
+
+// 포수
+// 만들고 싶으면 case 추가해서 사용 -> 마우스 또로롱
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    static HBRUSH hRed, hGreen, hBlue;
-    static HBRUSH NowBrush;
     switch (message)
     {
     case WM_CREATE:
     {
-            hRed = CreateSolidBrush(RGB(255, 0, 0));
-            hGreen = CreateSolidBrush(RGB(0, 255, 0));
-            hBlue = CreateSolidBrush(RGB(0, 0, 255));
-            NowBrush = hRed;
-    }
-    break;
-    
-    case WM_PAINT:
-    {
-        PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hWnd, &ps);
-
-        EndPaint(hWnd, &ps);
-    }
-    break;
-    case WM_KEYDOWN:
-    {
-        if (wParam == VK_SPACE)
+        for (int x = 0; x < 3; x++)
         {
-            DestroyWindow(hWnd);//바로 죽이는코드 PostQuitMessage는 메시지를 보내서 죽게만드는것.
-        }
-        else if (wParam == VK_UP)
-        {
-            SetWindowPos(hWnd, NULL, 0,0, 100, 100,  //SetWindowPos 윈도우의 포지션을 바꾸는 함수 
-                  SWP_NOZORDER|SWP_NOSIZE);
-        }
-        else if (wParam == VK_DOWN)
-        {
-            SetWindowPos(hWnd, NULL, 0, 0, 500, 500, //SWP_NOMOVE는 앞에 x,y값을 무시하라.
-                SWP_NOMOVE | SWP_NOZORDER);
-        }
-        else  if (wParam == VK_LEFT)
-        {
-            if (NowBrush == hRed)
-                NowBrush = hGreen;
-            else if (NowBrush == hGreen)
-                NowBrush = hBlue;
-            else if (NowBrush == hBlue)
-                NowBrush = hRed;
-          
-
-            SetClassLongPtr(hWnd, GCLP_HBRBACKGROUND,(LONG_PTR)NowBrush);//1.hWnd꺼를 바꿀꺼다 , 2.백그라운드를 바꿀거다., NowBrush 색으로.
-            InvalidateRect(hWnd, NULL, TRUE);
-            
-
-
-        }
-
-    }
-    break;
-    case WM_CHAR:
-    {
-        if ((TCHAR)wParam == 'n')
-        {
-            HWND hNote = FindWindow(_T("NotePad"), NULL);
-            if (hNote)
+            for (int y = 0; y < 3; y++)
             {
-                SendMessage(hNote, WM_CLOSE, 0, 0);//hNote에WM_CLOSE 를 보낸다. 즉 종료하라.
-            }
-            else
-            {
-                MessageBox(hWnd, TEXT("메모장을 먼저 실행하세요"), TEXT("조언"), MB_OK);
+                CreateWindow(lpszChildClass, NULL,
+                    WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_BORDER,
+                    x*100,y*100, 100, 100, hWnd, (HMENU)NULL, hInst, NULL);
+
             }
 
         }
-
     
-    }
-    case WM_LBUTTONDOWN:
-    {
-        SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 100, 100,
-            SWP_NOMOVE | SWP_NOSIZE);
-    }
-    break;
-    case WM_RBUTTONDOWN:
-    {
-        SetWindowPos(hWnd, HWND_NOTOPMOST, 0, 0, 100, 100,
-            SWP_NOMOVE | SWP_NOSIZE);
-    }
-    break;
+
+        /*
+        //차일드 윈도우
+         h=CreateWindow(lpszChildClass, NULL,
+            WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN|WS_BORDER,
+            100, 100, 100, 100, hWnd, (HMENU)0, hInst, NULL);
+         */
 
 
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
+         /*
+         //팝업 윈도우 
+         
+         CreateWindow(lpszChildClass, _T("Hi POPUP"),
+             WS_POPUP | WS_VISIBLE | WS_CLIPCHILDREN | WS_CAPTION|WS_SYSMENU,
+             100, 100, 500, 500, hWnd, (HMENU)0, hInst, NULL);
+         */
+        
+    }
+
     default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
+        return DefWindowProc(hWnd, message, wParam, lParam);    //Windows라면 당연히 되는 부분 굳이 짤 필요가 없음(move, 최대화, 최소화)
     }
     return 0;
 }
 
+BOOL bEllipse = TRUE;
+LRESULT CALLBACK ChildProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    BOOL bProp;
 
+    switch (message)
+    {
+    case WM_CREATE:
+    {
+        SetProp(hWnd, TEXT("bEllipse"), (HANDLE)TRUE); //bEllipse라는 속성을 주기위한 코드 , HANDLE으로 형변환한 이유는 무슨 형이 들어올지몰라서..
+        SetProp(hWnd, TEXT("nCount"), (HANDLE)3);
+    }
+    break;
+    case WM_PAINT:
+    {
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(hWnd, &ps);    
+        // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+        SetBkMode(hdc, TRANSPARENT);
 
+        //if (bEllipse == TRUE)
+        bProp = (BOOL)GetProp(hWnd, TEXT("bEllipse"));//bEllipse 속성값을 받아온다
+        if(bProp)
+        {
+            Ellipse(hdc, 10, 10, 90,  90);
+
+        }
+        else
+        {
+            MoveToEx(hdc, 10, 10, NULL); LineTo(hdc, 90, 90);
+            MoveToEx(hdc, 10, 90, NULL); LineTo(hdc, 90, 10);
+
+        }
+        EndPaint(hWnd, &ps);
+    }
+    break;
+    case WM_LBUTTONDOWN:
+    {
+        bProp = (BOOL)GetProp(hWnd, TEXT("bEllipse"));
+        SetProp(hWnd, TEXT("bEllipse"), (HANDLE)!bProp);
+        InvalidateRect(hWnd, NULL, TRUE);
+
+    }    
+    break;
+    case WM_DESTROY:
+        RemoveProp(hWnd, TEXT("bEllipse"));
+        RemoveProp(hWnd, TEXT("nCount"));
+        PostQuitMessage(0);
+        break;
+    default:
+        return DefWindowProc(hWnd, message, wParam, lParam);    //Windows라면 당연히 되는 부분 굳이 짤 필요가 없음(move, 최대화, 최소화)
+    }
+    return 0;
+
+}
