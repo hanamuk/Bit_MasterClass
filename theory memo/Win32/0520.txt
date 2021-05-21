@@ -1,0 +1,19 @@
+AfxGetMainWnd()  == 액자에서 불러오는 전역 함수(다른곳에서 액자(프레임을 부를 때 사용))
+AfxGetApp()  == 다른곳에서 앱을 부르는 전역함수.
+---------------------------------
+프로그램이 시작될때 app의 생성자가 생성되는데 
+그이유는 app의 CCreateDemoApp theApp; 
+라는 전역변수가 있기 때문에 얘가 불릴떄 생성자가 불리기 때문이다.
+
+즉 출발점이 theApp라는 전역변수이다.
+
+그다음은 2번째로 App에 InitInstance가 불린다.
+여기서 나머지 3개의 기둥 을만드는
+RUNTIME_CLASS(CCreateDemoDoc),
+RUNTIME_CLASS(CMainFrame),       
+RUNTIME_CLASS(CCreateDemoView));
+가 불리기 때문에 만들어진다.
+
+동기  	(sync)	: 함수의 동작완료시점 == 함수의 리턴시점
+ 
+비동기	(async)	: 함수의 동작완료시점 != 함수의 리턴시점
