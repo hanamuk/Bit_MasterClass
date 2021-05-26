@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LISTCTRL.h">
+    <ClInclude Include="RangeDemo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="LISTCTRLDlg.h">
+    <ClInclude Include="RangeDemoDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
@@ -35,10 +35,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LISTCTRL.cpp">
+    <ClCompile Include="RangeDemo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="LISTCTRLDlg.cpp">
+    <ClCompile Include="RangeDemoDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
@@ -46,32 +46,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="LISTCTRL.rc">
+    <ResourceCompile Include="RangeDemo.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\LISTCTRL.rc2">
+    <None Include="res\RangeDemo.rc2">
       <Filter>리소스 파일</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\LISTCTRL.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\Black-iTunes.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\iCal.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\iCal-empty.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\iPhoto.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\Text-Edit.ico">
+    <Image Include="res\RangeDemo.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

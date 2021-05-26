@@ -1,20 +1,20 @@
 ﻿
-// LISTCTRLDlg.h: 헤더 파일
+// RangeDemoDlg.h: 헤더 파일
 //
 
 #pragma once
 
 
-// CLISTCTRLDlg 대화 상자
-class CLISTCTRLDlg : public CDialogEx
+// CRangeDemoDlg 대화 상자
+class CRangeDemoDlg : public CDialogEx
 {
 // 생성입니다.
 public:
-	CLISTCTRLDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
+	CRangeDemoDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_LISTCTRL_DIALOG };
+	enum { IDD = IDD_RANGEDEMO_DIALOG };
 #endif
 
 	protected:
@@ -32,9 +32,10 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-	CListCtrl m_ctrlFriend;
-	afx_msg void OnBnClickedButton1();
-	afx_msg void OnBnClickedButton2();
-	afx_msg void OnBnClickedButton3();
-	afx_msg void OnLvnEndlabeleditListControl(NMHDR* pNMHDR, LRESULT* pResult);
+	CProgressCtrl m_ctrlProgress;
+	CSliderCtrl m_ctrlSlider;
+	afx_msg void OnNMReleasedcaptureSlider(NMHDR* pNMHDR, LRESULT* pResult);
+	CSpinButtonCtrl m_ctrlSpin;
+	afx_msg void OnEnUpdateEdit1();
+
 };

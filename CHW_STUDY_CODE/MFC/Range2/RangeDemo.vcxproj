@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{A905A956-1469-49CF-849B-097E9B216F6E}</ProjectGuid>
+    <ProjectGuid>{DEFD4F1D-0804-44A7-8FA2-C558D56F71F4}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
-    <RootNamespace>LISTCTRL</RootNamespace>
+    <RootNamespace>RangeDemo</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -184,35 +184,30 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="LISTCTRL.h" />
-    <ClInclude Include="LISTCTRLDlg.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="RangeDemo.h" />
+    <ClInclude Include="RangeDemoDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LISTCTRL.cpp" />
-    <ClCompile Include="LISTCTRLDlg.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="RangeDemo.cpp" />
+    <ClCompile Include="RangeDemoDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="LISTCTRL.rc" />
+    <ResourceCompile Include="RangeDemo.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\LISTCTRL.rc2" />
+    <None Include="res\RangeDemo.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\Black-iTunes.ico" />
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\iCal-empty.ico" />
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\iCal.ico" />
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\iPhoto.ico" />
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\Text-Edit.ico" />
-    <Image Include="res\LISTCTRL.ico" />
+    <Image Include="res\RangeDemo.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,16 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LISTCTRL.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="LISTCTRLDlg.h">
+    <ClInclude Include="TreeDemo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeDemoDoc.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeDemoView.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
@@ -35,10 +41,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LISTCTRL.cpp">
+    <ClCompile Include="TreeDemo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="LISTCTRLDlg.cpp">
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeDemoDoc.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeDemoView.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
@@ -46,32 +58,26 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="LISTCTRL.rc">
+    <ResourceCompile Include="TreeDemo.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\LISTCTRL.rc2">
+    <None Include="res\TreeDemo.rc2">
       <Filter>리소스 파일</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\LISTCTRL.ico">
+    <Image Include="res\TreeDemoDoc.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\Black-iTunes.ico">
+    <Image Include="res\TreeDemo.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\iCal.ico">
+    <Image Include="res\Toolbar.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\iCal-empty.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\iPhoto.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\Text-Edit.ico">
+    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\TreeImage.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

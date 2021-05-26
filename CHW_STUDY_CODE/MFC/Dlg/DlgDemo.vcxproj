@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{A905A956-1469-49CF-849B-097E9B216F6E}</ProjectGuid>
+    <ProjectGuid>{3154AF3A-52F3-4024-BD97-72287691E6A4}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
-    <RootNamespace>LISTCTRL</RootNamespace>
+    <RootNamespace>DlgDemo</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -183,16 +183,24 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CLoginDlg.h" />
+    <ClInclude Include="CPrint.h" />
+    <ClInclude Include="DlgDemo.h" />
+    <ClInclude Include="DlgDemoDoc.h" />
+    <ClInclude Include="DlgDemoView.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="LISTCTRL.h" />
-    <ClInclude Include="LISTCTRLDlg.h" />
+    <ClInclude Include="MainFrm.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LISTCTRL.cpp" />
-    <ClCompile Include="LISTCTRLDlg.cpp" />
+    <ClCompile Include="CLoginDlg.cpp" />
+    <ClCompile Include="CPrint.cpp" />
+    <ClCompile Include="DlgDemo.cpp" />
+    <ClCompile Include="DlgDemoDoc.cpp" />
+    <ClCompile Include="DlgDemoView.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -201,18 +209,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="LISTCTRL.rc" />
+    <ResourceCompile Include="DlgDemo.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\LISTCTRL.rc2" />
+    <None Include="res\DlgDemo.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\Black-iTunes.ico" />
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\iCal-empty.ico" />
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\iCal.ico" />
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\iPhoto.ico" />
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\ImageList\Text-Edit.ico" />
-    <Image Include="res\LISTCTRL.ico" />
+    <Image Include="res\DlgDemo.ico" />
+    <Image Include="res\DlgDemoDoc.ico" />
+    <Image Include="res\Toolbar.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
