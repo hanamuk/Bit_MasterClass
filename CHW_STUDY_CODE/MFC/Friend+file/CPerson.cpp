@@ -9,7 +9,7 @@ CPerson::CPerson()
 	m_strName = _T("");
 
 }
-CPerson::~CPerson() 
+CPerson::~CPerson()
 {
 
 

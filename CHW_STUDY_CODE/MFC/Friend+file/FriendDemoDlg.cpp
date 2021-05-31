@@ -1,11 +1,11 @@
 ﻿
-// FriendManagementDlg.cpp: 구현 파일
+// FriendDemoDlg.cpp: 구현 파일
 //
 
 #include "pch.h"
 #include "framework.h"
-#include "FriendManagement.h"
-#include "FriendManagementDlg.h"
+#include "FriendDemo.h"
+#include "FriendDemoDlg.h"
 #include "afxdialogex.h"
 
 #ifdef _DEBUG
@@ -46,48 +46,47 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CFriendManagementDlg 대화 상자
+// CFriendDemoDlg 대화 상자
 
 
 
-CFriendManagementDlg::CFriendManagementDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_FRIENDMANAGEMENT_DIALOG, pParent)
+CFriendDemoDlg::CFriendDemoDlg(CWnd* pParent /*=nullptr*/)
+	: CDialogEx(IDD_FRIENDDEMO_DIALOG, pParent)
 	, m_strName(_T(""))
 	, m_nAge(0)
 	, m_bGender(FALSE)
-	, m_Path(_T(""))
+	,m_nCount(0)
 {
-	m_nCount = 0;
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-void CFriendManagementDlg::DoDataExchange(CDataExchange* pDX)
+void CFriendDemoDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_LIST, m_ctrlLIst);
 	DDX_Text(pDX, IDC_NAME, m_strName);
 	DDX_Text(pDX, IDC_AGE, m_nAge);
 	DDX_Radio(pDX, IDC_MALE, m_bGender);
 	DDX_Control(pDX, IDC_SPIN1, m_ctrlSpin);
-	DDX_Control(pDX, IDC_LIST, m_ctrlFriendList);
 }
 
-BEGIN_MESSAGE_MAP(CFriendManagementDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CFriendDemoDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BTN_ADD, &CFriendManagementDlg::OnBnClickedBtnAdd)
-	ON_EN_UPDATE(IDC_AGE, &CFriendManagementDlg::OnEnUpdateAge)
-	ON_BN_CLICKED(IDC_BTN_DEL, &CFriendManagementDlg::OnBnClickedBtnDEL)
-	ON_BN_CLICKED(IDC_BTN_UPDATE, &CFriendManagementDlg::OnBnClickedBtnUPDATE)
-	ON_NOTIFY(LVN_ENDLABELEDIT, IDC_LIST, &CFriendManagementDlg::OnLvnEndlabeleditList)
-	ON_BN_CLICKED(IDC_SAVE, &CFriendManagementDlg::OnBnClickedSave)
-	ON_BN_CLICKED(IDC_LOAD, &CFriendManagementDlg::OnBnClickedLoad)
+	ON_BN_CLICKED(IDC_BTN_ADD, &CFriendDemoDlg::OnBnClickedBtnAdd)
+	ON_BN_CLICKED(IDC_BTN_DEL, &CFriendDemoDlg::OnBnClickedBtnDel)
+	ON_BN_CLICKED(IDC_BTN_UPDATE, &CFriendDemoDlg::OnBnClickedBtnUpdate)
+	ON_EN_UPDATE(IDC_AGE, &CFriendDemoDlg::OnEnUpdateAge)
+	ON_NOTIFY(LVN_ENDLABELEDIT, IDC_LIST, &CFriendDemoDlg::OnLvnEndlabeleditList)
+	ON_BN_CLICKED(IDC_LOAD, &CFriendDemoDlg::OnBnClickedLoad)
+	ON_BN_CLICKED(IDC_SAVE, &CFriendDemoDlg::OnBnClickedSave)
 END_MESSAGE_MAP()
 
 
-// CFriendManagementDlg 메시지 처리기
+// CFriendDemoDlg 메시지 처리기
 
-BOOL CFriendManagementDlg::OnInitDialog()
+BOOL CFriendDemoDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
@@ -117,26 +116,27 @@ BOOL CFriendManagementDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-	DWORD dwStyle = m_ctrlFriendList.GetExtendedStyle();
-	m_ctrlFriendList.SetExtendedStyle(dwStyle | LVS_EX_FULLROWSELECT | LVS_EX_CHECKBOXES );
+	DWORD dwStyle = m_ctrlLIst.GetExtendedStyle();
+	m_ctrlLIst.SetExtendedStyle(dwStyle | LVS_EX_FULLROWSELECT | LVS_EX_CHECKBOXES);
 
 	static CImageList imgListSmall;
-	imgListSmall.Create(16, 16, ILC_COLOR32, 2, 0);	
+	imgListSmall.Create(16, 16, ILC_COLOR32, 2, 0);
 	imgListSmall.Add(AfxGetApp()->LoadIcon(IDI_MALE));
 	imgListSmall.Add(AfxGetApp()->LoadIcon(IDI_FEMALE));
-	m_ctrlFriendList.SetImageList(&imgListSmall, LVSIL_SMALL);
+	m_ctrlLIst.SetImageList(&imgListSmall, LVSIL_SMALL);
 
-	m_ctrlFriendList.InsertColumn(0, _T("이름"), 0, 100);
-	m_ctrlFriendList.InsertColumn(1, _T("나이"), 0, 200);
-	m_ctrlFriendList.InsertColumn(2, _T("성별"), 0, 100);
+	m_ctrlLIst.InsertColumn(0, _T("이름"), 0, 100);
+	m_ctrlLIst.InsertColumn(1, _T("나이"), 0, 200);
+	m_ctrlLIst.InsertColumn(2, _T("성별"), 0, 100);
 
 	m_ctrlSpin.SetRange(0, 100);
 	m_ctrlSpin.SetPos(0);
 
+
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
-void CFriendManagementDlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CFriendDemoDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
@@ -153,7 +153,7 @@ void CFriendManagementDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  아래 코드가 필요합니다.  문서/뷰 모델을 사용하는 MFC 애플리케이션의 경우에는
 //  프레임워크에서 이 작업을 자동으로 수행합니다.
 
-void CFriendManagementDlg::OnPaint()
+void CFriendDemoDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -180,16 +180,16 @@ void CFriendManagementDlg::OnPaint()
 
 // 사용자가 최소화된 창을 끄는 동안에 커서가 표시되도록 시스템에서
 //  이 함수를 호출합니다.
-HCURSOR CFriendManagementDlg::OnQueryDragIcon()
+HCURSOR CFriendDemoDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
 
 
-void CFriendManagementDlg::OnBnClickedBtnAdd()
+void CFriendDemoDlg::OnBnClickedBtnAdd()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
 	UpdateData(1);
 
 	if (m_nCount < 5)
@@ -204,86 +204,129 @@ void CFriendManagementDlg::OnBnClickedBtnAdd()
 		AfxMessageBox(_T("메모리가 꽉찼음"));
 		return;
 	}
-	
+
 
 	CString strAge;
 	strAge.Format(_T("%d"), m_nAge);
 
-	m_ctrlFriendList.InsertItem(0, m_strName, m_bGender);
+	m_ctrlLIst.InsertItem(0, m_strName, m_bGender);
 	//m_ctrlFriendList.SetItemText(0, 0, m_strName);
-	m_ctrlFriendList.SetItemText(0, 1, strAge);
-	m_ctrlFriendList.SetItemText(0, 2, m_bGender == 0 ?_T("남성"):_T("여성"));
+	m_ctrlLIst.SetItemText(0, 1, strAge);
+	m_ctrlLIst.SetItemText(0, 2, m_bGender == 0 ? _T("남성") : _T("여성"));
+
 
 }
 
 
-void CFriendManagementDlg::OnEnUpdateAge()
+void CFriendDemoDlg::OnBnClickedBtnDel()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	int nCount = m_ctrlLIst.GetItemCount();
+
+	for (int i = nCount - 1; i >= 0; i--)
+	{
+		if (m_ctrlLIst.GetCheck(i))
+		{
+			m_ctrlLIst.DeleteItem(i);
+			m_pPerson[m_nCount].m_bGender = 0;
+			m_pPerson[m_nCount].m_nAge = 0;
+			m_pPerson[m_nCount].m_strName = _T("");
+			m_nCount--;
+		}
+
+	}
+}
+
+
+void CFriendDemoDlg::OnBnClickedBtnUpdate()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(1);
+	int nCount = m_ctrlLIst.GetItemCount();
+
+	for (int i = nCount - 1; i >= 0; i--)
+	{
+		if (m_ctrlLIst.GetCheck(i))
+			m_ctrlLIst.SetItemText(i, 0, m_strName);
+	}
+	
+}
+
+
+void CFriendDemoDlg::OnEnUpdateAge()
 {
 	if (m_ctrlSpin.GetSafeHwnd())//태어났으면 GetSafeHwnd 가 ture
 		m_nAge = m_ctrlSpin.GetPos();
 }
 
-void CFriendManagementDlg::OnBnClickedBtnDEL()//삭제
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	int nCount = m_ctrlFriendList.GetItemCount();
 
-	for (int i = nCount - 1; i >= 0; i--)
-	{
-		if (m_ctrlFriendList.GetCheck(i))
-		{
-			m_ctrlFriendList.DeleteItem(i);
-			m_pPerson[m_nCount].m_bGender = 0;
-			m_pPerson[m_nCount].m_nAge = 0;
-			m_pPerson[m_nCount].m_strName =_T("");
-			m_nCount--;
-		}
-			
-	}
-}
-
-
-void CFriendManagementDlg::OnBnClickedBtnUPDATE()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	UpdateData(1);
-	int nCount = m_ctrlFriendList.GetItemCount();
-
-	for (int i = nCount - 1; i >= 0; i--)
-	{
-		if (m_ctrlFriendList.GetCheck(i))
-			m_ctrlFriendList.SetItemText(i, 0, m_strName);
-	}
-}
-
-
-void CFriendManagementDlg::OnLvnEndlabeleditList(NMHDR* pNMHDR, LRESULT* pResult)
+void CFriendDemoDlg::OnLvnEndlabeleditList(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NMLVDISPINFO* pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
-	CEdit* pEdit = m_ctrlFriendList.GetEditControl();
+	CEdit* pEdit = m_ctrlLIst.GetEditControl();
 	CString strTemp;
 	pEdit->GetWindowText(strTemp);
 	//AfxMessageBox(strTemp);
-	m_ctrlFriendList.SetItemText(pDispInfo->item.iItem, 0, strTemp);
+	m_ctrlLIst.SetItemText(pDispInfo->item.iItem, 0, strTemp);
 
 	*pResult = 0;
 }
 
 
-void CFriendManagementDlg::OnBnClickedSave()
+void CFriendDemoDlg::OnBnClickedLoad()
+{
+
+	//대화상자 
+	CFileDialog a(TRUE);
+	int nResult = a.DoModal();
+
+	if (nResult != IDOK) return;
+	CString Path = a.GetPathName(); //경로얻어오기
+	/////////////////////////////////////////
+
+	m_nCount = 0;//메모리초기화
+	m_ctrlLIst.DeleteAllItems();//화면초기화
+
+	/////////////////////////////////////////
+	CFile file((Path),
+		CFile::modeRead);	//사용할 파일을 선언.
+
+	CArchive ar(&file, CArchive::load);//아키브를 만들고 위의파일과 연결하고, store는 저장용, load는 가져오기
+
+	ar >> m_nCount;
+	for (int i = 0; i < m_nCount; i++)
+	{
+		m_pPerson[i].Serialize(ar);
+	}
+	/////////////////////
+	//화면에 표시
+	CString strAge;
+	for (int i = 0; i < m_nCount; i++)
+	{
+		strAge.Format(_T("%d"), m_pPerson[i].m_nAge);
+
+		m_ctrlLIst.InsertItem(0, m_pPerson[i].m_strName, m_pPerson[i].m_bGender);
+		m_ctrlLIst.SetItemText(0, 1, strAge);
+		m_ctrlLIst.SetItemText(0, 2, m_pPerson[i].m_bGender == 0 ? _T("남성") : _T("여성"));
+	}
+
+}
+
+
+void CFriendDemoDlg::OnBnClickedSave()
 {
 	//대화상자 
 	CFileDialog a(FALSE);
 	int nResult = a.DoModal();
-	
+
 	if (nResult != IDOK) return;
 
-	m_Path= a.GetPathName(); //경로얻어오기
+	CString Path = a.GetPathName(); //경로얻어오기
 
 	// ////////////////////////////
-	CFile file((m_Path),
+	CFile file((Path),
 		CFile::modeCreate | CFile::modeReadWrite);	//사용할 파일을 선언.
 
 	CArchive ar(&file, CArchive::store);//아키브를 만들고 위의파일과 연결하고, store는 저장용, load는 가져오기
@@ -306,45 +349,6 @@ void CFriendManagementDlg::OnBnClickedSave()
 	*/
 
 	m_nCount = 0;//메모리초기화
-	m_ctrlFriendList.DeleteAllItems();//화면초기화
+	m_ctrlLIst.DeleteAllItems();//화면초기화
 }
 
-
-void CFriendManagementDlg::OnBnClickedLoad()
-{
-
-	//대화상자 
-	CFileDialog a(TRUE);
-	int nResult = a.DoModal();
-
-	if (nResult != IDOK) return;
-	m_Path = a.GetPathName(); //경로얻어오기
-	/////////////////////////////////////////
-
-	m_nCount = 0;//메모리초기화
-	m_ctrlFriendList.DeleteAllItems();//화면초기화
-
-	/////////////////////////////////////////
-	CFile file((m_Path),
-		 CFile::modeRead);	//사용할 파일을 선언.
-
-	CArchive ar(&file, CArchive::load);//아키브를 만들고 위의파일과 연결하고, store는 저장용, load는 가져오기
-
-	ar >> m_nCount;
-	for (int i = 0; i < m_nCount; i++)
-	{
-		m_pPerson[i].Serialize(ar);
-	}
-	/////////////////////
-	//화면에 표시
-	CString strAge;
-	for (int i = 0; i < m_nCount; i++)
-	{
-		strAge.Format(_T("%d"), m_pPerson[i].m_nAge);
-
-		m_ctrlFriendList.InsertItem(0, m_pPerson[i].m_strName, m_pPerson[i].m_bGender);
-		m_ctrlFriendList.SetItemText(0, 1, strAge);
-		m_ctrlFriendList.SetItemText(0, 2, m_pPerson[i].m_bGender == 0 ? _T("남성") : _T("여성"));
-	}
-
-}

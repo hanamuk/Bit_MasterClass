@@ -11,4 +11,3 @@ public:
 	CString m_strName;
 	virtual void Serialize(CArchive& ar);
 };
-

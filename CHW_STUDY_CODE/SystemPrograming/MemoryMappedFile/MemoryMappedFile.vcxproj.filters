@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FriendManagement.h">
+    <ClInclude Include="MemoryMappedFile.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="FriendManagementDlg.h">
+    <ClInclude Include="MemoryMappedFileDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
@@ -33,42 +33,30 @@
     <ClInclude Include="pch.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CPerson.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FriendManagement.cpp">
+    <ClCompile Include="MemoryMappedFile.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="FriendManagementDlg.cpp">
+    <ClCompile Include="MemoryMappedFileDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CPerson.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="FriendManagement.rc">
+    <ResourceCompile Include="MemoryMappedFile.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\FriendManagement.rc2">
+    <None Include="res\MemoryMappedFile.rc2">
       <Filter>리소스 파일</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\FriendManagement.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\Custom-Icon-Design-Flatastic-7-Male.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Users\BIT\Desktop\Res\Custom-Icon-Design-Pretty-Office-7-Female.ico">
+    <Image Include="res\MemoryMappedFile.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
