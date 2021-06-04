@@ -5,17 +5,18 @@
 #include <ws2tcpip.h> //inet_pton()
 CMyNet::CMyNet() : listen_socket(0)
 {
-    //1. ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ ï¿½Ê±ï¿½È­(Winsock 2.2ï¿½ï¿½ï¿½ï¿½)
+    //1. ¶óÀÌºê·¯¸® ÃÊ±âÈ­(Winsock 2.2¹öÀü)
     WSADATA wsa;
     if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
     {
-        printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½ï¿½ \n");
+        printf("À©µµ¿ì ¼ÒÄÏ ÃÊ±âÈ­ ½ÇÆÐ \n");
         exit(-1);
     }
 }
 
 CMyNet::~CMyNet()
-    //2. ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+{
+    //2. ¶óÀÌºê·¯¸® ÇØÁ¦
     WSACleanup();
 }
 
@@ -24,20 +25,20 @@ void CMyNet::CreateSocket(int port)
 {
     listen_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (listen_socket == INVALID_SOCKET)
-        throw "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½";
+        throw "¼ÒÄÏ »ý¼º ¿À·ù";
 
     SOCKADDR_IN addr;
     memset(&addr, 0, sizeof(addr)); //API ZeroMemory(&addr,sizeof(addr));
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
-    addr.sin_addr.s_addr = htonl(INADDR_ANY); //longï¿½ï¿½ï¿½ï¿½ network byte orderï¿½ï¿½..
+    addr.sin_addr.s_addr = htonl(INADDR_ANY); //longÇüÀ» network byte order·Î..
     int retval = bind(listen_socket, (SOCKADDR*)&addr, sizeof(addr));
     if (retval == SOCKET_ERROR)
-        throw "bind ï¿½ï¿½ï¿½ï¿½";
+        throw "bind ¿À·ù";
 
     retval = listen(listen_socket, SOMAXCONN);
     if (retval == SOCKET_ERROR)
-        throw "listen ï¿½ï¿½ï¿½ï¿½";
+        throw "listen ¿À·ù";
     Run();
 
 
@@ -49,66 +50,66 @@ void CMyNet::Run()
 {
     SOCKET clientsocket;
     SOCKADDR_IN clientaddr;
-    int addrlen = sizeof(clientaddr); //ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int addrlen = sizeof(clientaddr); //ÃÊ±âÈ­ ¾ÈÇÏ¸é ³­¸®ÇÔ
 
     while (true)
     {
-        printf("Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n");
+        printf("Å¬¶óÀÌ¾ðÆ® ¿¬°á´ë±â\n");
         clientsocket = accept(listen_socket, (SOCKADDR*)&clientaddr, &addrlen);
         if (clientsocket == INVALID_SOCKET)
         {
-            printf("accept ï¿½ï¿½ï¿½ï¿½\n");
+            printf("accept ¿À·ù\n");
             continue;
         }
 
         char ip[20];
         int port;
         GetAddress(clientsocket, ip, &port);
-        printf("[Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½ï¿½ï¿½ï¿½] %s:%d\n", ip, port);
+        printf("[Å¬¶óÀÌ¾ðÆ® Á¢¼Ó] %s:%d\n", ip, port);
 
         RecvMessage(clientsocket);
     }
 }
 
-//echo(ï¿½Þ¾Æ¸ï¿½)
+//echo(¸Þ¾Æ¸®)
 void CMyNet::RecvMessage(SOCKET sock)
 {
     while (1)
     {
-        //ï¿½ï¿½ï¿½ï¿½
+        //¼ö½Å
         char buf[256];
-        //ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Þµï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
-        // ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ sizeof(buf)ï¿½ï¿½ Å©ï¿½â¸¦ ï¿½Øºï¿½ï¿½ß°ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
-        //recv()ï¿½ï¿½ return(retval) ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Åµï¿½ byteÅ©ï¿½â¸¦ È®ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
+        //¼ÒÄÏ¿¡ ¿¬°áµÈ »ó´ë¹æÀ¸·ÎºÎÅÍ Àü´ÞµÈ ¸Þ½ÃÁö¸¦ ¼ö½ÅÇÑ´Ù
+        // ´Ü, ³ª´Â ¼ö½ÅÀ» À§ÇØ sizeof(buf)ÀÇ Å©±â¸¦ ÁØºñÇß°í, ±× ¹öÆÛÀÇ ½ÃÀÛÀ§Ä¡¸¦ Àü´Þ.
+        //recv()ÀÇ return(retval) À» ÅëÇØ¼­ ½ÇÁ¦ ¼ö½ÅµÈ byteÅ©±â¸¦ È®ÀÎ ÇÒ ¼ö ÀÖ´Ù.
         int retval = recv(sock, buf, sizeof(buf), 0);
 
-        buf[retval] = '\0'; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±æ‹š strlenï¿½ï¿½Å­ï¿½ï¿½ ï¿½Ñ°ï¿½Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ strlenï¿½ï¿½ ï¿½Î°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±â¶§ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î°ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ø´ï¿½.
-        printf(">> [ï¿½ï¿½ï¿½Åµï¿½ï¿½ï¿½ï¿½ï¿½] : %s", buf);
+        buf[retval] = '\0'; //»ó´ë¹æÀÌ ³Ñ±æ‹š strlen¸¸Å­¸¸ ³Ñ°å´Ù°í °¡Á¤ÇÏ¸é strlenÀº ³Î°ªÀ» »©°í ÁÖ±â¶§¹®¿¡ ¸¶Áö¸·¿¡ ³Î°ªÀ» ³Ö¾îÁØ´Ù.
+        printf(">> [¼ö½Åµ¥ÀÌÅÍ] : %s", buf);
 
         if (retval == -1 || retval == 0)
         {
-            printf("ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ or ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n");
+            printf("¼ÒÄÏ¿À·ù or »ó´ë¹æÀÌ Á¾·ùÇÔ\n");
             closesocket(sock);
             break;
         }
 
-        //ï¿½ï¿½ï¿½Åµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×´ï¿½ï¿½ ï¿½Û½ï¿½
-        //bufï¿½ï¿½ ï¿½Ö¼Ò·Îºï¿½ï¿½ï¿½ retvalï¿½ï¿½ byteï¿½ï¿½Å­ ï¿½ï¿½ï¿½ï¿½
+        //¼ö½ÅµÈ Á¤º¸¸¦ ±×´ë·Î ¼Û½Å
+        //bufÀÇ ÁÖ¼Ò·ÎºÎÅÍ retvalÀÇ byte¸¸Å­ Àü¼Û
         int retval1 = send(sock, buf, retval, 0);
-        printf("    [ï¿½Û½ï¿½]%dbyte\n", retval);
+        printf("    [¼Û½Å]%dbyte\n", retval);
     }
     closesocket(sock);
 }
 
-//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ ï¿½Ö¼Ò¸ï¿½ È¹ï¿½ï¿½
-//getpeername(ï¿½ï¿½ï¿½ï¿½), getsockname(ï¿½Ú½ï¿½)
+//¿¬°áµÈ Åë½Å ¼ÒÄÏÀ» ÀÌ¿ëÇØ¼­ ÁÖ¼Ò¸¦ È¹µæ
+//getpeername(»ó´ë¹æ), getsockname(ÀÚ½Å)
 void  CMyNet::GetAddress(SOCKET sock, char* ip, int* port)
 {
     SOCKADDR_IN  addr;
     int addrlength = sizeof(addr);
     getpeername(sock, (SOCKADDR*)&addr, &addrlength);
 
-    //inet_ntoa : ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ -> ï¿½ï¿½ï¿½Ú¿ï¿½
+    //inet_ntoa : Á¤¼öÁÖ¼Ò -> ¹®ÀÚ¿­
     //#include <ws2tcpip.h> //inet_ntop
     inet_ntop(AF_INET, &(addr.sin_addr.s_addr), ip, INET_ADDRSTRLEN);
     *port = ntohs(addr.sin_port);
