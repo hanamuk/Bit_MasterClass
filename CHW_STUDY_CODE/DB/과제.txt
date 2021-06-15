@@ -1,0 +1,32 @@
+1. select empno||','||ename||','||job||','||mgr||','||hiredate||','||sal||','||nvl(comm,0)||','||deptno "THE_OUTPUT" 
+from emp;
+
+2. 
+select ename, sal from emp
+ where sal <1500 OR sal > 2850;
+
+3. 
+ select ename, job, hiredate from emp where hiredate>='81/02/20' AND hiredate < '81/05/02' order by 3 ASC;
+
+4.
+
+select ename , sal  from emp where (deptno =10 or deptno =30) AND sal >1500;
+
+5. 
+ select ename from emp where hiredate>='82/01/01' AND hiredate <='82/12/31';
+
+6.
+
+select ename  from emp where (instr(ename,'L',1,2)>0) AND (deptno =30 OR mgr =7782);
+
+7. 
+select ename , job , sal  from emp where job in('CLERK','ANALYST') AND sal not in(1000,3000,5000);
+
+8.
+ select empno , ename, round(sal*1.15, 0) as "NEW SALARY" from emp;
+
+9.
+ select empno , ename, round(sal*1.15, 0) as "NEW SALARY", round(sal*0.15) as increase from emp;
+ 
+10.
+select ename,nvl2(comm, to_char(sal+comm) ,'No Commision') as COMM  from emp;
