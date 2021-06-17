@@ -1,0 +1,121 @@
+
+
+문제----------------------------------
+1. 이순신과 같은 부서에서 근무하는 사람
+select deptno, saname
+from sawon
+where deptno = (select deptno from sawon where saname = '이순신');
+
+2. 회사에서 평균급여보다 ㅁ낳이 받는사람
+select *
+from sawon
+where sapay >(select avg(nvl(sapay,0)) from sawon);
+
+3.회사에서 급여를 가장 많이 받는사람을 추출
+select *
+from sawon
+where sapay >=(select max(sapay) from sawon );
+
+4. 10번 부서에서 전체 사원들의 평균급여보다 많이 받는사람을 추출
+select *
+from sawon
+where deptno =10 AND sapay >=(select avg(nvl(sapay,0)) from sawon);
+
+
+
+5. 10번 부서에서 최대 급여, 최소급여를 받는사람을 추출
+
+select *
+from sawon
+where  deptno =10 AND 
+(sapay = (select max(sapay)  from sawon where deptno =10)
+OR 
+sapay = (select min(sapay) from sawon where deptno =10 ));
+
+6번 영업부에서 가장 급여를 많이받는사람 
+select *
+from sawon s1, dept d1 
+where 
+d1.deptno = s1.deptno AND d1.dname = '영업부' 
+AND 
+s1.sapay =(select max(s.sapay)
+	  from sawon s, dept d
+	  where d.deptno = s.deptno AND d.dname = '영업부');
+
+select saname, sapay , sahire
+from(select saname, sapay, sahire from sawon order by sahire)
+where rownum <=5;
+
+select saname, sapay , sahire
+from sawon s1
+where not exists(select sabun from sawon s2 where s2.samgr = s1.sabun);
+
+
+select d.dname, sum(s.sapay)
+from sawon s, dept d
+where s.deptno = d.deptno;
+(select sum(s3.sapay) from sawon s3 where s1.deptno = s3.deptno)
+>(select avg(nvl(s2.sapay,0) from sawon s2 where s1.deptno = s2.deptno)*0.3
+order by d.dnamed
+
+with dept_tot as (select dname, sum(sapay) dept_total from sawon natural join dept group by dname),
+ 	all_tot as (select avg(sapay) all_total from sawon)
+select dt.dname, dt.dept_total from dept_tot dt, all_tot at
+where dt.dept_total  > at.all_total* 0.3;
+
+
+ with dept_total as (select dname , sum(sapay) ds from sawon natural join dept group by dname),
+  all_tot as (select sum(sapay) atotal from sawon)
+  select dt.dname , dt.ds from dept_total dt , all_tot at where dt.ds > at.atotal*0.3;
+
+
+
+select level sabun, saname, sajob from sawon where sabun != 1
+connect by prior sabun = samgr
+start with saname = '한국남'; 
+
+select level sabun, saname, sajob from sawon where sabun != 3
+connect by sabun = prior  samgr
+start with saname = '이순라'; 
+select*
+from sawon
+where IS NOT sawon;
+
+select *
+from gogek_ex
+
+1.
+update gogek_ex set godam=13 where godam is null ;
+update gogek_ex set godam=13 where godam =0 ;
+
+2. 
+update gogek_ex set godam=null where godam =13 ;
+
+3.create table sawon_10 as select * from sawon where 1=2;
+--다시
+insert into sawon_10(SABUN,SANAME,DEPTNO,SAJOB,SAPAY,SAHIRE,SASEX,SAMGR) 
+select * from sawon natural join dept
+where dname = '관리부' AND sajob = '사원';
+
+
+4.
+update sawon_ex set sajob =(select sajob from sawon where saname ='이순신') where deptno = (select deptno from sawon where saname ='이순신');
+
+
+5. 
+
+ (select s.sapay from sawon s,dept d  where d.dname ='영업부')*1.1 =  where sajob = '사원' ;
+
+
+update sawon_ex set sapay  = sapay  * 1.1
+where sajob = '사원' AND deptno = 
+
+update sawon_ex set sapay  = sapay  * 1.1
+where sajob = '사원' AND deptno = (select deptno from dept d where d.dname ='영업부' );
+
+
+6.
+update sawon_ex set sapay  = sapay  * 1.1
+where sajob = '사원' AND deptno = (select deptno from dept d where d.dname ='영업부' );
+
+

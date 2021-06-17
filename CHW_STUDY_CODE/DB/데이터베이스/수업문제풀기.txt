@@ -1,0 +1,89 @@
+1.
+select sajob as “직책” ,sum(sapay) as “급여합계”, avg(nvl(sapay,0)) as “평균”, count(*) as “인원수” from sawon
+group by sajob;
+
+2. 
+select sasex as “성별”, sajob as “직책” ,avg(nvl(sapay,0))as “평균”,  count(*) as “인원수”, max(sapay) as “최대급여”
+from sawon
+where sajob != '사원'
+group by sajob, sasex
+order by 3 desc;
+
+3. 
+select sajob as “직책”, deptno as “부서”, sum(sapay) as “급여합계”, count(*) as “인원수”
+from sawon
+where deptno ! = 10
+group by sajob, deptno
+having count(*) <= 3;
+
+4. 
+select sahire as “입사년도”, sum(sapay) as “급여합계”, avg(nvl(sapay,0)) as “평균”
+from sawon
+group by  sahire;
+
+
+5.
+select g.goname 고객이름 , g.gotel 고객번호, s.saname 담당자
+from gogek g, sawon s
+where g.godam = s.sabun;
+
+6.
+select s1.saname 사원명, s1.sapay 급여, s2.saname 관리자
+from sawon s1, sawon s2
+where s1.samgr = s2.sabun(+);
+
+
+7. 
+- -----------------
+7-1.
+select 
+sum(decode(d.dname,'관리부',s.sapay ,0))   관리부 ,
+sum(decode(d.dname,'영업부',s.sapay,0)) 영업부,
+sum(decode(d.dname,'전산부',s.sapay,0)) 전산부,
+sum(decode(d.dname,'총무부',s.sapay,0)) 총무부 ,
+sum(sapay) as “합계”
+from sawon s, dept d
+where s.deptno = d.deptno;
+
+
+7- 2. 
+select g.goname 고객이름 , g.gotel 고객번호, s.saname 담당자명, s.sajob 직책, d.dname 부서명
+from gogek g, sawon s, dept d
+where g.godam = s.sabun(+) AND s.deptno = d.deptno(+);
+
+7-3.
+select d.dname 부서명, s.saname 사원명, s.sajob 사원직책, m.saname 관리자명, m.sajob 관리자직책
+from sawon s, sawon m, dept d
+where s.deptno = d.deptno(+) AND s.samgr = m.sabun(+);
+
+
+
+7-4.
+select 
+sajob as “직책”,
+sum(decode(d.dname ,'관리부',s.sapay ,0))   관리부 ,
+sum(decode(d.dname,'영업부',s.sapay,0)) 영업부,
+sum(decode(d.dname,'전산부',s.sapay,0)) 전산부,
+sum(decode(d.dname,'총무부',s.sapay,0)) 총무부 ,
+sum(sapay) as “직책별 합계”
+from sawon s, dept d
+where s.deptno = d.deptno(+)
+group by sajob; 
+
+
+등급
+select* from salgrade; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
