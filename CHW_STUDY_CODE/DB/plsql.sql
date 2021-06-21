@@ -1,44 +1,46 @@
 set serveroutput on
--- if¹®Çü½Ä
+-- ifë¬¸í˜•ì‹
 
---if Á¶°Ç then
---	¸í·É
---[elsif Á¶°Ç then
--- 	¸í·É;
+--if ì¡°ê±´ then
+--	ëª…ë ¹
+--[elsif ì¡°ê±´ then
+-- 	ëª…ë ¹;
 --....
---else ¸í·É;]
+--else ëª…ë ¹;]
 --end if;
 
---break; //Á¦¾î¹® ºüÁ®³ª°¡±â
+--break; //ì œì–´ë¬¸ ë¹ ì ¸ë‚˜ê°€ê¸°
 
 
---¹İº¹¹® : for Ä«¿îÆ® º¯¼ö in ÃÊ±â°ª.. ÃÖ´ë°ª loop ~~ end loop;
--- ¹İº¹¹® : while Á¶°Ç loop ~~end loop;
--- ¹İº¹¹® : loop ~~end loop;
-
-
+--ë°˜ë³µë¬¸ : for ì¹´ìš´íŠ¸ ë³€ìˆ˜ in ì´ˆê¸°ê°’.. ìµœëŒ€ê°’ loop ~~ end loop;
+-- ë°˜ë³µë¬¸ : while ì¡°ê±´ loop ~~end loop;
+-- ë°˜ë³µë¬¸ : loop ~~end loop;
+declare
+	i2 number(4) := 1;
+	i number(4) := 1;
 begin
-	dbms_output.put_line('for¸¦ ÀÌ¿ëÇÑ Ã³¸®');
+	dbms_output.put_line('forë¥¼ ì´ìš©í•œ ì²˜ë¦¬');
 	for i in 1..10 loop
-		dbms_output.put_line('i ÀÇ °ª ->' || i);
+		dbms_output.put_line('i ì˜ ê°’ ->' || i);
 	end loop;
 
-	dbms_output.put_line('while¸¦ ÀÌ¿ëÇÑ Ã³¸®');
+	dbms_output.put_line('whileë¥¼ ì´ìš©í•œ ì²˜ë¦¬');
 
-	i number(4) := 1;
+	
  	while i<10 loop
-		dbms_output.put_line('i ÀÇ °ª ->' || i);
+		dbms_output.put_line('i ì˜ ê°’ ->' || i);
 	i  := i+1;
 	end loop;
 
-	i2 number(4) := 1;
+	
 	loop
-	dbms_output.put_line('loop¸¦ ÀÌ¿ëÇÑ Ã³¸®');
+	if(i2 > 9) break;
+	dbms_output.put_line('loopë¥¼ ì´ìš©í•œ ì²˜ë¦¬');
 	i2  := i2+1;
 	end loop;
 end;
 /
 
--- while °ú ´Ü¼ø¹İº¹¹® (loop)À¸·Î °¢ 1~10±îÁö Ãâ·Â
+-- while ê³¼ ë‹¨ìˆœë°˜ë³µë¬¸ (loop)ìœ¼ë¡œ ê° 1~10ê¹Œì§€ ì¶œë ¥
 
 
