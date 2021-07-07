@@ -1,0 +1,7 @@
+E:\CHW_BIT_CODE\.NET\0707_Cshape04\0707_Cshape04\bin\Debug\0707_Cshape04.exe.config
+E:\CHW_BIT_CODE\.NET\0707_Cshape04\0707_Cshape04\bin\Debug\0707_Cshape04.exe
+E:\CHW_BIT_CODE\.NET\0707_Cshape04\0707_Cshape04\bin\Debug\0707_Cshape04.pdb
+E:\CHW_BIT_CODE\.NET\0707_Cshape04\0707_Cshape04\obj\Debug\0707_Cshape04.csproj.CoreCompileInputs.cache
+E:\CHW_BIT_CODE\.NET\0707_Cshape04\0707_Cshape04\obj\Debug\0707_Cshape04.exe
+E:\CHW_BIT_CODE\.NET\0707_Cshape04\0707_Cshape04\obj\Debug\0707_Cshape04.pdb
+E:\CHW_BIT_CODE\.NET\0707_Cshape04\0707_Cshape04\obj\Debug\0707_Cshape04.csprojAssemblyReference.cache

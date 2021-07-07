@@ -1,0 +1,7 @@
+C:\Users\BIT\source\repos\0705_Cshape01\0705_Cshape01\bin\Debug\0705_Cshape01.exe.config
+C:\Users\BIT\source\repos\0705_Cshape01\0705_Cshape01\bin\Debug\0705_Cshape01.exe
+C:\Users\BIT\source\repos\0705_Cshape01\0705_Cshape01\bin\Debug\0705_Cshape01.pdb
+C:\Users\BIT\source\repos\0705_Cshape01\0705_Cshape01\obj\Debug\0705_Cshape01.csprojAssemblyReference.cache
+C:\Users\BIT\source\repos\0705_Cshape01\0705_Cshape01\obj\Debug\0705_Cshape01.csproj.CoreCompileInputs.cache
+C:\Users\BIT\source\repos\0705_Cshape01\0705_Cshape01\obj\Debug\0705_Cshape01.exe
+C:\Users\BIT\source\repos\0705_Cshape01\0705_Cshape01\obj\Debug\0705_Cshape01.pdb

@@ -1,0 +1,7 @@
+E:\CHW_BIT_CODE\.NET\designpattern\designpattern\bin\Debug\designpattern.exe.config
+E:\CHW_BIT_CODE\.NET\designpattern\designpattern\bin\Debug\designpattern.exe
+E:\CHW_BIT_CODE\.NET\designpattern\designpattern\bin\Debug\designpattern.pdb
+E:\CHW_BIT_CODE\.NET\designpattern\designpattern\obj\Debug\designpattern.csprojAssemblyReference.cache
+E:\CHW_BIT_CODE\.NET\designpattern\designpattern\obj\Debug\designpattern.csproj.CoreCompileInputs.cache
+E:\CHW_BIT_CODE\.NET\designpattern\designpattern\obj\Debug\designpattern.exe
+E:\CHW_BIT_CODE\.NET\designpattern\designpattern\obj\Debug\designpattern.pdb

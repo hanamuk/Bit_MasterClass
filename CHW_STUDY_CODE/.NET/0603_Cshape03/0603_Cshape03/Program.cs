@@ -125,7 +125,7 @@ namespace _0603_Cshape03
 
                   if (s.IndexOf("나무") == -1) //검색실패시-1
                   {
-                      WriteLine("못찾음");
+                      WriteLine("못찾음");3
                   }
 
                   WriteLine(s.Contains("꽃이")); //몇번쨰에 있는지는 리턴안하고, 있는지 없는지 bool만 리턴.
